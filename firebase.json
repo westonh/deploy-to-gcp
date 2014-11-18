@@ -1,0 +1,9 @@
+{
+  "firebase": "deploy-to-gcp",
+  "public": "public",
+  "ignore": [
+    "firebase.json",
+    "**/.*",
+    "**/node_modules/**"
+  ]
+}

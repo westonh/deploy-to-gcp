@@ -1,0 +1,15 @@
+{
+  "name": "deploy-to-gcp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "backend.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "firebase": "^2.0.4",
+    "temp": "^0.8.1"
+  }
+}

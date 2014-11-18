@@ -1,0 +1,66 @@
+<html>
+<head>
+    <script src="https://cdn.firebase.com/js/client/2.0.3/firebase.js"></script>
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+</head>
+<body>
+    <input id="git_repo" type="text" placeholder="git Repo" size="100" value="https://github.com/GoogleCloudPlatform/appengine-angular-gotodos"></input><br/><br/>
+    <input id="project_id" type="text" placeholder="GCP Project ID" size="100" value="mikelehen-playground"></input><br/><br/>
+    <a href="#" id="go">Go</a>
+
+    <div id="status">
+        
+    </div>
+
+    <script>
+    var ref = new Firebase('https://deploy-to-gcp.firebaseio.com/');
+    
+    function status(text) {
+        var $status = $('#status');
+        $status.html($status.html() + '<br/>' + text);
+    }
+
+    function deploy(git_repo, project_id, oauth_token) {
+        console.log(git_repo);
+        console.log(project_id);
+        console.log(oauth_token);
+
+        var deployRef = ref.child('deploy_requests').push();
+        deployRef.set({
+            git_repo: git_repo,
+            project_id: project_id,
+            oauth_token: oauth_token
+        });
+        
+        // watch for log messages.
+        var logRef = ref.child('deploy_logs').child(deployRef.key());
+        logRef.on('child_added', function(s) {
+            status(s.val());
+        });
+    }
+
+    $('#go').on('click', function(e) {
+        ref.authWithOAuthPopup("google", function(error, authData) {
+            if (error) {
+                console.log('error');
+                status(error.toString());
+            } else {
+                var oauth_token = authData.google.accessToken;
+                var repo = $('#git_repo').val();
+                var project_id = $('#project_id').val();
+                deploy(repo, project_id, oauth_token);
+            }
+
+            console.log(error);
+            console.log(authData);
+
+        }, 
+        { 
+            scope: 'https://www.googleapis.com/auth/appengine.admin' 
+        });
+        e.preventDefault();
+    });
+    
+    </script>
+</body>
+</html>
