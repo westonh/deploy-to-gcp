@@ -1,20 +1,99 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>Deploy to GCP</title>
+    <meta name="generator" content="Bootply" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link href="css/styles.css" rel="stylesheet">
+
     <script src="https://cdn.firebase.com/js/client/2.0.3/firebase.js"></script>
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 </head>
 <body>
-    <input id="git_repo" type="text" placeholder="git Repo" size="100" value="https://github.com/GoogleCloudPlatform/appengine-angular-gotodos"></input><br/><br/>
-    <input id="project_id" type="text" placeholder="GCP Project ID" size="100" value="mikelehen-playground"></input><br/><br/>
-    <a href="#" id="go">Go</a>
 
-    <div id="status">
-        
+    <div class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a href="../" class="navbar-brand">Deploy to GCP</a>
+                <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" target="_blank">Login</a>
+                </li>
+                <li>
+                    <a href="#" target="_blank">Sign Out</a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="page-header top" id="banner">
+        <div class="row">
+            <div class="col-lg-8 col-md-7 col-sm-6">
+                <h1>Deploy to GCP</h1>
+            </div>
+        </div>
     </div>
 
-    <script>
-    var ref = new Firebase('https://deploy-to-gcp.firebaseio.com/');
-    
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="well bs-component">
+                <form class="form-horizontal">
+                    <fieldset>
+                        <div class="form-group">
+                            <label for="inputRepo" class="col-lg-2 control-label">Git Repo URL</label>
+                            <div class="col-lg-10">
+                                <input type="text" class="form-control" id="git_repo" placeholder="http://github/myproject" value="https://github.com/GoogleCloudPlatform/appengine-angular-gotodos"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputProjectID" class="col-lg-2 control-label">Project ID</label>
+                            <div class="col-lg-10">
+                                <input type="text" class="form-control" id="project_id" placeholder="Project ID" value="thematic-gift-768"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-lg-10 col-lg-offset-2">
+                                <button type="submit" id="go" class="btn btn-primary btn-success btn-lg">Deploy</button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="bs-component">
+                <div class="well well-lg">
+                    Log Output
+                    <div id="status">
+                        blah blah blah
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- script references -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
+<script>
+    var ref = new Firebase('https://deploy-to-gcp-weston.firebaseio.com/');
+
     function status(text) {
         var $status = $('#status');
         $status.html($status.html() + '<br/>' + text);
@@ -31,7 +110,7 @@
             project_id: project_id,
             oauth_token: oauth_token
         });
-        
+
         // watch for log messages.
         var logRef = ref.child('deploy_logs').child(deployRef.key());
         logRef.on('child_added', function(s) {
@@ -54,13 +133,13 @@
             console.log(error);
             console.log(authData);
 
-        }, 
-        { 
-            scope: 'https://www.googleapis.com/auth/appengine.admin' 
+        },
+        {
+            scope: 'https://www.googleapis.com/auth/appengine.admin'
         });
         e.preventDefault();
     });
-    
+
     </script>
 </body>
 </html>

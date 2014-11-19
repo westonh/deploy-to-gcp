@@ -1,5 +1,5 @@
 {
-  "firebase": "deploy-to-gcp",
+  "firebase": "deploy-to-gcp-westonh",
   "public": "public",
   "ignore": [
     "firebase.json",

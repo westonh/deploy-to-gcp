@@ -6,7 +6,7 @@ var config = require('./config.json');
 
 temp.track();
 
-var ref = new Firebase('https://deploy-to-gcp.firebaseio.com/');
+var ref = new Firebase('https://deploy-to-gcp-weston.firebaseio.com/');
 var deployRequestsRef = ref.child('deploy_requests');
 var deployLogsRef = ref.child('deploy_logs');
 
@@ -29,7 +29,7 @@ function doDeploy(snapshot) {
   var git_repo = snapshot.child('git_repo').val();
   var project_id = snapshot.child('project_id').val();
   var oauth_token = snapshot.child('oauth_token').val();
- 
+
   cloneRepo(git_repo, logRef, function(error, dir) {
     if (!error) {
       deployApp(dir, project_id, oauth_token, logRef, function(error) {
